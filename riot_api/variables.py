@@ -13,7 +13,7 @@ def get_player_data(gameName, tagLine):
     url=f"https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{gameName}/{tagLine}/?api_key={RIOT_API_KEY}"
     response = requests.get(url)
 
-    if response == 200:
+    if response.status_code == 200:
         return response.json()
     else:
         print("{response.text}")
