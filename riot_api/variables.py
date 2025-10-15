@@ -16,5 +16,5 @@ def get_player_data(gameName, tagLine):
     if response.status_code == 200:
         return response.json()
     else:
-        print("{response.text}")
+        print(f"Błąd API: {response.status_code} - {response.text}")
         return None
