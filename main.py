@@ -15,7 +15,7 @@ def main():
         player_name = request.form.get("player_name")
         player_tag = request.form.get("player_tag")
 
-        data=get_player_data(player_name,player_tag)
+        data = get_player_data(player_name, player_tag)
 
         if data:
             puuid = data.get("puuid")
