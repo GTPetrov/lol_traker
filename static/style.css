@@ -1,3 +1,24 @@
+body {
+    background: #f2f2f2;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    padding-top: 100px;
+}
+
+form input {
+    padding: 8px;
+    width: 200px;
+}
+
+form button {
+    padding: 8px 16px;
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+h2 {
+    margin-top: 40px;
+}
 .cos{
     text-align: center;
 }

@@ -7,6 +7,21 @@
     <title>Document</title>
 </head>
 <body>
-    <h1 class="cos">ale super stronka</h1>
+    <section class="cos">
+        <h1>GET DATA</h1><br>
+        <form method="post">
+            <label>Put player name and tagline</label>
+            <input type="text" name="player_name">
+            <input type="text" name="player_tag">
+            <button type="submit">Find</button>
+        </form>
+        
+        {% if puuid %}
+            <h2>PUUID:</h2>
+            <p>{{ puuid }}</p>
+        {% elif error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
+    </section>
 </body>
 </html>
