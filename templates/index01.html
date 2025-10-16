@@ -10,13 +10,20 @@
     <section class="cos">
         <h1>GET DATA</h1><br>
         <form method="post">
-            <label>Put player name and tagline</label>
+            <label>Put Nickname and Tagline and select Region</label><br>
             <input type="text" name="player_name">
             <input type="text" name="player_tag">
+            <select name="region">
+                <option>Americas</option>
+                <option>Europe</option>
+                <option>Asia</option>
+            </select>
+            <br>
             <button type="submit">Find</button>
         </form>
         
         {% if puuid %}
+            <h3>{{game_name}} | {{game_tag}}</h3>
             <h2>PUUID:</h2>
             <p>{{ puuid }}</p>
         {% elif error %}

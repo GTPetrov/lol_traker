@@ -11,18 +11,23 @@ app = Flask(__name__)
 def main():
     puuid = None
     error = None
+    game_tag = None
+    game_name = None
     if request.method == "POST":
         player_name = request.form.get("player_name")
         player_tag = request.form.get("player_tag")
+        region = request.form.get("region")
 
-        data = get_player_data(player_name, player_tag)
+        data = get_player_data(player_name, player_tag, region)
 
         if data:
             puuid = data.get("puuid")
+            game_name = data.get("gameName")
+            game_tag = data.get("tagLine")
         else:
             error = "Couldnt get player data"
 
-    return render_template("index01.html", puuid=puuid, error=error)
+    return render_template("index01.html", puuid=puuid, error=error, game_name=game_name, game_tag=game_tag)
 
 if __name__ == "__main__":
     app.run(debug=True)
