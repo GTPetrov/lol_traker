@@ -102,11 +102,12 @@ def get_rank(puuid,region_input):
 
         if not full_rank:
             #player has no rank
-            return {"tier": "UNRANKED", "rank": "", "queueType": "UNRANKED"}
+            tier={"tier": "UNRANKED", "rank": "", "queueType": "UNRANKED"}
+            return tier
         for entry in full_rank:
             if entry.get("queueType") == "RANKED_SOLO_5x5":
                 return entry
-            #if no solo rank return any rank
+        #if no solo rank return any rank
         return full_rank[0]
     
     else:
