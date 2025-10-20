@@ -16,12 +16,12 @@ SERVER_ID_MAP = {
 
     # AMERYKI
     "na1": "na1",
-    "na": "na1",  # Dodatkowe zabezpieczenie
+    "na": "na1",  
     "br1": "br1",
     "lan1": "la1",
     "las1": "la2",
 
-    # AZJA/PACIFIK (Wymaga sprawdzenia, jeśli używasz tych starych/nowych kluczy)
+    # AZJA/PACIFIK 
     "kr": "kr",
     "jp": "jp1",
     "oce": "oc1",  # Oceania
@@ -82,13 +82,13 @@ def server_data(puuid, region_input):
     if response.status_code == 200:
         return response.json()
     else:
-        print(f"Błąd API: {response.status_code} - {response.text}")
+        print(f"error API: {response.status_code} - {response.text}")
         return None
     
 #getting rank data
 def get_rank(puuid,region_input):
     if not region_input:
-        print("Błąd: No region chosen.")
+        print("error: No region chosen.")
         return None
         
     region_key = region_input.lower()
@@ -112,4 +112,23 @@ def get_rank(puuid,region_input):
     
     else:
         print(f"Błąd API: {response.status_code} - {response.text}")
+        return None
+    
+#getting avatar data
+def get_player_avatar(region_input, puuid):
+    if not region_input:
+        print("error: No region chosen.")
+        return None
+    
+    region_key = region_input.lower()
+
+    region_route = REGIONAL_ROUTING.get(region_key)
+    
+    url=f"https://{region_route}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{puuid}"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"error API: {response.status_code} - {response.text}")
         return None

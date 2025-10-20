@@ -13,8 +13,8 @@ def main():
     error = None
     game_tag = None
     game_name = None
-    server=None
-    rank=None
+    server = None
+    rank_display = None
 
     if request.method == "POST":
         player_name = request.form.get("player_name")
@@ -33,14 +33,23 @@ def main():
 
             #getting rank data
             rank_data = get_rank(puuid, region)
-            rank = rank_data.get("tier")
+            rank_display=""
+
+            if rank_data:
+                rank_tier = rank_data.get("tier")
+                rank_division = rank_data.get("rank")
+            
+            if rank_tier == "Unranked":
+                rank_display = "Unranked"
+            else:
+                rank_display = f"{rank_tier.capitalize()} {rank_division}"
            
 
         else:
             error = "Couldnt get player data"
 
 
-    return render_template("index01.html", puuid=puuid, error=error, game_name=game_name, game_tag=game_tag, server=server, rank=rank)
+    return render_template("index01.html", puuid=puuid, error=error, game_name=game_name, game_tag=game_tag, server=server, rank=rank_display)
 
 
 
