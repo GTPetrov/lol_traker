@@ -16,6 +16,14 @@
         <div class="avatar">
             <img src="" alt="">
         </div>
+
+        <div class="rank">
+            {% if puuid %}
+            <p>{{rank}}</p>
+            {% elif error %}
+                <p style="color: red;">{{ error }}</p>
+            {% endif %}
+        </div>
     </section>
 
     <section class="main_right">
@@ -25,9 +33,33 @@
             <input type="text" name="player_name">
             <input type="text" name="player_tag">
             <select name="region">
-                <option>Americas</option>
-                <option>Europe</option>
-                <option>Asia</option>
+                <optgroup label="Europa">
+                    <option value="eune">eune</option>
+                    <option value="euw">euw</option>
+                    <option value="ru">ru</option>
+                    <option value="tr">tr</option>
+                </optgroup>
+                
+                <optgroup label="Ameryki">
+                    <option value="na1">na1</option>
+                    <option value="br1">br1</option>
+                    <option value="lan1">lan1</option>
+                    <option value="las1">las1</option>
+                </optgroup>
+                
+                <optgroup label="Azja">
+                    <option value="kr">kr</option>
+                    <option value="jp">jp</option>
+                </optgroup>
+                
+                <optgroup label="Płd.-Wsch. Azja">
+                    <option value="oce">oce</option>
+                    <option value="ph">ph</option>
+                    <option value="sg">sg</option>
+                    <option value="th">th</option>
+                    <option value="tw">tw</option>
+                    <option value="vn">vn</option>
+                </optgroup>
             </select>
             <br>
             <button type="submit">Find</button>

@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from riot_api.variables import get_player_data , server_data
+from riot_api.variables import get_player_data , server_data, get_rank
 
 
 
@@ -14,6 +14,7 @@ def main():
     game_tag = None
     game_name = None
     server=None
+    rank=None
 
     if request.method == "POST":
         player_name = request.form.get("player_name")
@@ -26,16 +27,20 @@ def main():
             puuid = data.get("puuid")
             game_name = data.get("gameName")
             game_tag = data.get("tagLine")
-            #pobieranie danych serwera
-            server_data1= server_data(puuid, region)
-            server=server_data1.get("region")
+            #getting region data
+            server_data1 = server_data(puuid, region)
+            server = server_data1.get("region")
+
+            #getting rank data
+            rank_data = get_rank(puuid, region)
+            rank = rank_data.get("tier")
            
 
         else:
             error = "Couldnt get player data"
 
 
-    return render_template("index01.html", puuid=puuid, error=error, game_name=game_name, game_tag=game_tag, server=server)
+    return render_template("index01.html", puuid=puuid, error=error, game_name=game_name, game_tag=game_tag, server=server, rank=rank)
 
 
 
