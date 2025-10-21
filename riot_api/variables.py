@@ -113,6 +113,7 @@ def get_rank(puuid,region_input):
     else:
         print(f"Błąd API: {response.status_code} - {response.text}")
         return None
+
     
 #getting avatar data
 def get_player_avatar(region_input, puuid):
@@ -132,3 +133,23 @@ def get_player_avatar(region_input, puuid):
     else:
         print(f"error API: {response.status_code} - {response.text}")
         return None
+    
+def avatar_answer(avatar_id):
+    #taking the newest version of game
+    LATEST_FALLBACK_VERSION = "14.20.1" 
+    latest_version = LATEST_FALLBACK_VERSION
+    
+    try:
+        response = requests.get("https://ddragon.leagueoflegends.com/api/versions.json")
+        response.raise_for_status() 
+
+        version_list = response.json()
+        latest_version = version_list[0] 
+        
+    except Exception as e:
+        # Obsługa innych błędów (np. lista jest pusta)
+        print(f"Nieznany błąd: {e}. Używanie wersji awaryjnej.")
+
+    # Budowanie finalnego URL awatara
+    avatar_url = f"http://ddragon.leagueoflegends.com/cdn/{latest_version}/img/profileicon/{avatar_id}.png"
+    return avatar_url

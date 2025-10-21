@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from riot_api.variables import get_player_data , server_data, get_rank
+from riot_api.variables import get_player_data , server_data, get_rank, get_player_avatar, avatar_answer
 
 
 
@@ -15,6 +15,8 @@ def main():
     game_name = None
     server = None
     rank_display = None
+    avatar_url = None
+    
 
     if request.method == "POST":
         player_name = request.form.get("player_name")
@@ -43,13 +45,28 @@ def main():
                 rank_display = "Unranked"
             else:
                 rank_display = f"{rank_tier.capitalize()} {rank_division}"
-           
+            
+
+            #
+            avatar_data = get_player_avatar(region, puuid)
+            avatar_id = 29
+            avatar_url = avatar_answer(avatar_id)
+
+            if avatar_data:
+                temp_avatar_id = avatar_data.get("profileIconId")
+
+                if temp_avatar_id is not None:
+                    avatar_id = temp_avatar_id
+                    avatar_url = avatar_answer(avatar_id)
+            
+
+            
 
         else:
             error = "Couldnt get player data"
 
 
-    return render_template("index01.html", puuid=puuid, error=error, game_name=game_name, game_tag=game_tag, server=server, rank=rank_display)
+    return render_template("index01.html", puuid=puuid, error=error, game_name=game_name, game_tag=game_tag, server=server, rank=rank_display, avatar=avatar_url)
 
 
 
