@@ -125,7 +125,7 @@ def get_player_avatar(region_input, puuid):
 
     region_route = REGIONAL_ROUTING.get(region_key)
     
-    url=f"https://{region_route}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{puuid}"
+    url=f"https://{region_route}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{puuid}?api_key={RIOT_API_KEY}"
     response = requests.get(url)
 
     if response.status_code == 200:
@@ -136,7 +136,7 @@ def get_player_avatar(region_input, puuid):
     
 def avatar_answer(avatar_id):
     #taking the newest version of game
-    LATEST_FALLBACK_VERSION = "14.20.1" 
+    LATEST_FALLBACK_VERSION = "15.21.1" 
     latest_version = LATEST_FALLBACK_VERSION
     
     try:
@@ -153,3 +153,40 @@ def avatar_answer(avatar_id):
     # Budowanie finalnego URL awatara
     avatar_url = f"http://ddragon.leagueoflegends.com/cdn/{latest_version}/img/profileicon/{avatar_id}.png"
     return avatar_url
+
+def getting_match_id(region_input, puuid):
+
+    if not region_input:
+        print("Błąd: Region nie został podany.")
+        return None
+        
+    region_key = region_input.lower()
+
+    region_route = REGIONAL_ROUTING.get(region_key)
+    url = f"https://{region_route}.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}?api_key={RIOT_API_KEY}"
+    
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"error API: {response.status_code} - {response.text}")
+        return None
+    
+def getting_match_data_by_id(region_input, match_id):
+    if not region_input:
+        print("Błąd: Region nie został podany.")
+        return None
+        
+    region_key = region_input.lower()
+
+    region_route = REGIONAL_ROUTING.get(region_key)
+    url = f"https://{region_route}.api.riotgames.com/lol/match/v5/matches/{match_id}?api_key={RIOT_API_KEY}"
+
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print(f"error API: {response.status_code} - {response.text}")
+        return None

@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from riot_api.variables import get_player_data , server_data, get_rank, get_player_avatar, avatar_answer
+from riot_api.variables import get_player_data , server_data, get_rank, get_player_avatar, avatar_answer, getting_match_data_by_id,  getting_match_id
 
 
 
@@ -16,7 +16,7 @@ def main():
     server = None
     rank_display = None
     avatar_url = None
-    
+    match_id = None
 
     if request.method == "POST":
         player_name = request.form.get("player_name")
@@ -49,6 +49,7 @@ def main():
 
             #
             avatar_data = get_player_avatar(region, puuid)
+            
             avatar_id = 29
             avatar_url = avatar_answer(avatar_id)
 
@@ -59,6 +60,11 @@ def main():
                     avatar_id = temp_avatar_id
                     avatar_url = avatar_answer(avatar_id)
             
+            #getting past match data
+            match_data = getting_match_id(region, puuid)
+
+            if isinstance(match_data, list) and len(match_data)>0:
+                match_id = match_data[0]
 
             
 
@@ -66,7 +72,7 @@ def main():
             error = "Couldnt get player data"
 
 
-    return render_template("index01.html", puuid=puuid, error=error, game_name=game_name, game_tag=game_tag, server=server, rank=rank_display, avatar=avatar_url)
+    return render_template("index01.html", puuid=puuid, error=error, game_name=game_name, game_tag=game_tag, server=server, rank=rank_display, avatar=avatar_url, match_id=match_id)
 
 
 
